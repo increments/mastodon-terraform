@@ -26,6 +26,22 @@ variable "aws_ecs_optimized_ami_ids" {
   }
 }
 
+variable "aws_ec2_coreos_ami_ids" {
+  default = {
+    "ap-northeast-1" = "ami-b50cfdd3"
+    "ap-southeast-1" = "ami-ed32568e"
+    "ap-southeast-2" = "ami-05aab266"
+    "ca-central-1"   = "ami-59a8163d"
+    "eu-central-1"   = "ami-33df775c"
+    "eu-west-1"      = "ami-109d6069"
+    "eu-west-2"      = "ami-7da3b219"
+    "us-east-1"      = "ami-ee774a95"
+    "us-east-2"      = "ami-a57251c0"
+    "us-west-1"      = "ami-e3ebc183"
+    "us-west-2"      = "ami-5106eb29"
+  }
+}
+
 variable "aws_ecs_service_desired_count_node_streaming" {}
 
 variable "aws_ecs_service_desired_count_rails_puma" {}
@@ -139,3 +155,5 @@ variable "mastodon_node_streaming_port" {
 variable "mastodon_vapid_private_key" {}
 
 variable "mastodon_vapid_public_key" {}
+
+variable "mastodon_dd_agent_api_key" {}

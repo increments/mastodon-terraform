@@ -201,3 +201,7 @@ variable "mastodon_vapid_private_key" {
 variable "mastodon_vapid_public_key" {
   default = ""
 }
+
+variable "mastodon_dd_agent_api_key" {
+  default = ""
+}
