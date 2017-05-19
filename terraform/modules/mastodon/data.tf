@@ -110,6 +110,10 @@ data "template_file" "mastodon_environment_variables_rails" {
       "value": "$${mastodon_secret_key_base}"
     },
     {
+      "name": "SENTRY_DSN",
+      "value": "$${mastodon_sentry_dsn}"
+    },
+    {
       "name": "SINGLE_USER_MODE",
       "value": "$${mastodon_single_user_mode}"
     },
@@ -190,6 +194,7 @@ data "template_file" "mastodon_environment_variables_rails" {
     mastodon_s3_cloudfront_host          = "${var.mastodon_s3_cloudfront_host}"
     mastodon_s3_region                   = "${data.aws_region.current.name}"
     mastodon_secret_key_base             = "${var.mastodon_secret_key_base}"
+    mastodon_sentry_dsn                  = "${var.mastodon_sentry_dsn}"
     mastodon_single_user_mode            = "${var.mastodon_single_user_mode}"
     mastodon_smtp_auth_method            = "${var.mastodon_smtp_auth_method}"
     mastodon_smtp_delivery_method        = "${var.mastodon_smtp_delivery_method}"
