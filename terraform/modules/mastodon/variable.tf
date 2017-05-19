@@ -96,6 +96,10 @@ variable "mastodon_s3_cloudfront_host" {}
 
 variable "mastodon_secret_key_base" {}
 
+variable "mastodon_sentry_dsn" {
+  default = ""
+}
+
 variable "mastodon_single_user_mode" {}
 
 variable "mastodon_smtp_auth_method" {}
