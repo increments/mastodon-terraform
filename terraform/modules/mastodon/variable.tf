@@ -84,9 +84,21 @@ variable "mastodon_paperclip_secret" {}
 
 variable "mastodon_prepared_statements" {}
 
+variable "mastodon_qiita_client_id" {
+  default = "dummy"
+}
+
+variable "mastodon_qiita_client_secret" {
+  default = "dummy"
+}
+
 variable "mastodon_s3_cloudfront_host" {}
 
 variable "mastodon_secret_key_base" {}
+
+variable "mastodon_sentry_dsn" {
+  default = ""
+}
 
 variable "mastodon_single_user_mode" {}
 

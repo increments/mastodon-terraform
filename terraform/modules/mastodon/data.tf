@@ -74,6 +74,14 @@ data "template_file" "mastodon_environment_variables_rails" {
       "value": "$${mastodon_prepared_statements}"
     },
     {
+      "name": "QIITA_CLIENT_ID",
+      "value": "$${mastodon_qiita_client_id}"
+    },
+    {
+      "name": "QIITA_CLIENT_SECRET",
+      "value": "$${mastodon_qiita_client_secret}"
+    },
+    {
       "name": "REDIS_HOST",
       "value": "$${mastodon_redis_host}"
     },
@@ -100,6 +108,10 @@ data "template_file" "mastodon_environment_variables_rails" {
     {
       "name": "SECRET_KEY_BASE",
       "value": "$${mastodon_secret_key_base}"
+    },
+    {
+      "name": "SENTRY_DSN",
+      "value": "$${mastodon_sentry_dsn}"
     },
     {
       "name": "SINGLE_USER_MODE",
@@ -174,12 +186,15 @@ data "template_file" "mastodon_environment_variables_rails" {
     mastodon_paperclip_root_url          = "${var.mastodon_paperclip_root_url}"
     mastodon_paperclip_secret            = "${var.mastodon_paperclip_secret}"
     mastodon_prepared_statements         = "${var.mastodon_prepared_statements}"
+    mastodon_qiita_client_id             = "${var.mastodon_qiita_client_id}"
+    mastodon_qiita_client_secret         = "${var.mastodon_qiita_client_secret}"
     mastodon_redis_host                  = "${aws_elasticache_cluster.mastodon.cache_nodes.0.address}"
     mastodon_redis_port                  = "${aws_elasticache_cluster.mastodon.cache_nodes.0.port}"
     mastodon_s3_bucket                   = "${var.aws_s3_bucket_name}"
     mastodon_s3_cloudfront_host          = "${var.mastodon_s3_cloudfront_host}"
     mastodon_s3_region                   = "${data.aws_region.current.name}"
     mastodon_secret_key_base             = "${var.mastodon_secret_key_base}"
+    mastodon_sentry_dsn                  = "${var.mastodon_sentry_dsn}"
     mastodon_single_user_mode            = "${var.mastodon_single_user_mode}"
     mastodon_smtp_auth_method            = "${var.mastodon_smtp_auth_method}"
     mastodon_smtp_delivery_method        = "${var.mastodon_smtp_delivery_method}"
