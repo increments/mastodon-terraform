@@ -94,6 +94,12 @@ A valid S3 bucket name for uploading files (e.g. user profile images).
 
 e.g. `my-mastodon`
 
+### TF_VAR_mastodon_s3_cloudfront_host
+
+The domain for the CloudFront distribution where uploaded files will be provided from.
+
+e.g. `cdn.example.com`
+
 ### TF_VAR_mastodon_db_pass
 
 Database password.
