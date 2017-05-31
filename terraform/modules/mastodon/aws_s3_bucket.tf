@@ -8,3 +8,7 @@ resource "aws_s3_bucket" "mastodon" {
     max_age_seconds = "3000"
   }
 }
+
+resource "aws_s3_bucket" "mastodon_logs" {
+  bucket = "${var.aws_s3_bucket_name}-logs"
+}

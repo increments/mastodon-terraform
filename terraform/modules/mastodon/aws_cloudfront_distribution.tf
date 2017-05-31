@@ -71,6 +71,11 @@ resource "aws_cloudfront_distribution" "mastodon" {
     }
   }
 
+  logging_config {
+    bucket = "${aws_s3_bucket.mastodon_logs.bucket_domain_name}"
+    prefix = "cloudfront"
+  }
+
   origin {
     domain_name = "${aws_alb.mastodon.dns_name}"
     origin_id   = "mastodon_alb"
