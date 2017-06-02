@@ -94,6 +94,10 @@ variable "mastodon_qiita_client_secret" {
   default = "dummy"
 }
 
+variable "mastodon_proxy_count" {
+  default = ""
+}
+
 variable "mastodon_s3_cloudfront_host" {}
 
 variable "mastodon_secret_key_base" {}

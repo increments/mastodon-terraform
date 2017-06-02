@@ -54,6 +54,10 @@ data "template_file" "mastodon_environment_variables_rails" {
       "value": "$${mastodon_local_https}"
     },
     {
+      "name": "MASTODON_PROXY_COUNT",
+      "value": "$${mastodon_proxy_count}"
+    },
+    {
       "name": "OTP_SECRET",
       "value": "$${mastodon_otp_secret}"
     },
@@ -181,6 +185,7 @@ data "template_file" "mastodon_environment_variables_rails" {
     mastodon_email_domain_whitelist      = "${var.mastodon_email_domain_whitelist}"
     mastodon_local_domain                = "${var.mastodon_local_domain}"
     mastodon_local_https                 = "${var.aws_acm_certificate_arn == "" ? "false" : "true"}"
+    mastodon_proxy_count                 = "${var.mastodon_proxy_count}"
     mastodon_otp_secret                  = "${var.mastodon_otp_secret}"
     mastodon_paperclip_root_path         = "${var.mastodon_paperclip_root_path}"
     mastodon_paperclip_root_url          = "${var.mastodon_paperclip_root_url}"
