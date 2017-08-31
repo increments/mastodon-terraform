@@ -135,3 +135,7 @@ variable "mastodon_node_streaming_cluster_num" {}
 variable "mastodon_node_streaming_port" {
   default = "4000"
 }
+
+variable "mastodon_vapid_private_key" {}
+
+variable "mastodon_vapid_public_key" {}

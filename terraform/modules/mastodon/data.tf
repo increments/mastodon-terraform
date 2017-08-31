@@ -168,6 +168,14 @@ data "template_file" "mastodon_environment_variables_rails" {
     {
       "name": "STREAMING_CLUSTER_NUM",
       "value": "$${mastodon_node_streaming_cluster_num}"
+    },
+    {
+      "name": "VAPID_PRIVATE_KEY",
+      "value": "$${mastodon_vapid_private_key}"
+    },
+    {
+      "name": "VAPID_PUBLIC_KEY",
+      "value": "$${mastodon_vapid_public_key}"
     }
   ]
   JSON
@@ -213,6 +221,8 @@ data "template_file" "mastodon_environment_variables_rails" {
     mastodon_smtp_server                 = "${var.mastodon_smtp_server}"
     mastodon_node_streaming_api_base_url = "${var.mastodon_node_streaming_api_base_url}"
     mastodon_node_streaming_cluster_num  = "${var.mastodon_node_streaming_cluster_num}"
+    mastodon_vapid_private_key           = "${var.mastodon_vapid_private_key}"
+    mastodon_vapid_public_key            = "${var.mastodon_vapid_public_key}"
   }
 }
 

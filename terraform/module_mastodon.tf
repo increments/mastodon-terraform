@@ -50,5 +50,7 @@ module "mastodon" {
   mastodon_smtp_server                                              = "${var.mastodon_smtp_server}"
   mastodon_node_streaming_api_base_url                              = "${var.mastodon_node_streaming_api_base_url}"
   mastodon_node_streaming_cluster_num                               = "${var.mastodon_node_streaming_cluster_num}"
+  mastodon_vapid_private_key                                        = "${var.mastodon_vapid_private_key}"
+  mastodon_vapid_public_key                                         = "${var.mastodon_vapid_public_key}"
   source                                                            = "./modules/mastodon"
 }

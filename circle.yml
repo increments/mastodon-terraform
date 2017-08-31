@@ -63,6 +63,8 @@ dependencies:
       if [ -n "${TF_VAR_mastodon_smtp_password}" ]; then echo TF_VAR_mastodon_smtp_password=${TF_VAR_mastodon_smtp_password} >> .env; fi
       if [ -n "${TF_VAR_mastodon_smtp_port}" ]; then echo TF_VAR_mastodon_smtp_port=${TF_VAR_mastodon_smtp_port} >> .env; fi
       if [ -n "${TF_VAR_mastodon_smtp_server}" ]; then echo TF_VAR_mastodon_smtp_server=${TF_VAR_mastodon_smtp_server} >> .env; fi
+      if [ -n "${TF_VAR_mastodon_vapid_private_key}" ]; then echo TF_VAR_mastodon_vapid_private_key=${TF_VAR_mastodon_vapid_private_key} >> .env; fi
+      if [ -n "${TF_VAR_mastodon_vapid_public_key}" ]; then echo TF_VAR_mastodon_vapid_public_key=${TF_VAR_mastodon_vapid_public_key} >> .env; fi
     - >
       docker run --env-file .env --volume $(pwd)/terraform:/app/terraform --workdir /app/terraform ${TERRAFORM_DOCKER_IMAGE_NAME} init \
         -backend=true \
