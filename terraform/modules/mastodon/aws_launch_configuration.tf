@@ -7,4 +7,8 @@ resource "aws_launch_configuration" "mastodon" {
   name_prefix                 = "mastodon-"
   security_groups             = ["${aws_security_group.mastodon_web.id}"]
   user_data                   = "#!/bin/bash\necho ECS_CLUSTER='${aws_ecs_cluster.mastodon.name}' >> /etc/ecs/ecs.config"
+
+  lifecycle {
+    create_before_destroy = true
+  }
 }
