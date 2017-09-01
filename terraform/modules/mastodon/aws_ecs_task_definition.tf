@@ -178,7 +178,7 @@ resource "aws_ecs_task_definition" "mastodon_dd_agent" {
         }
       ],
       "name": "dd-agent",
-      "image": "${replace(aws_ecr_repository.dd_agent.repository_url, "https://", "")}:${var.mastodon_docker_image_tag_dd_agent}",
+      "image": "datadog/docker-dd-agent:${var.mastodon_docker_image_tag_dd_agent}",
       "logConfiguration": {
         "logDriver": "awslogs",
         "options": {
