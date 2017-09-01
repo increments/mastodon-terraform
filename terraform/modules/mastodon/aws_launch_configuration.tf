@@ -7,4 +7,8 @@ resource "aws_launch_configuration" "mastodon" {
   name_prefix                 = "mastodon-"
   security_groups             = ["${aws_security_group.mastodon_web.id}"]
   user_data                   = "${data.template_file.mastodon_aws_launch_configuration_user_data.rendered}"
+
+  lifecycle {
+    create_before_destroy = true
+  }
 }
