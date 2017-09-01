@@ -193,3 +193,11 @@ variable "mastodon_node_streaming_api_base_url" {
 variable "mastodon_node_streaming_cluster_num" {
   default = "1"
 }
+
+variable "mastodon_vapid_private_key" {
+  default = ""
+}
+
+variable "mastodon_vapid_public_key" {
+  default = ""
+}
