@@ -278,52 +278,21 @@ data "template_file" "mastodon_environment_variables_streaming" {
 
 data "template_file" "mastodon_aws_launch_configuration_user_data" {
   template = <<-CONFIG
-  #cloud-config
-
-  coreos:
-    units:
-      - name: amazon-ecs-agent.service
-        command: start
-        runtime: true
-        content: |
-          [Unit]
-          Description=Amazon ECS Agent
-          After=docker.service
-          Requires=docker.service
-          Requires=network-online.target
-          After=network-online.target
-
-          [Service]
-          Environment=ECS_CLUSTER=$${aws_ecs_cluster_mastodon_name}
-          Environment=ECS_LOGLEVEL=warn
-          Environment=ECS_CHECKPOINT=true
-          ExecStartPre=-/usr/bin/docker kill ecs-agent
-          ExecStartPre=-/usr/bin/docker rm ecs-agent
-          ExecStartPre=/usr/bin/docker pull amazon/amazon-ecs-agent
-          ExecStart=/usr/bin/docker run --name ecs-agent --env=ECS_CLUSTER=$ECS_CLUSTER --env=ECS_LOGLEVEL=$ECS_LOGLEVEL --env=ECS_CHECKPOINT=$ECS_CHECKPOINT --publish=127.0.0.1:51678:51678 --volume=/var/run/docker.sock:/var/run/docker.sock --volume=/var/lib/aws/ecs:/data amazon/amazon-ecs- agent
-          ExecStop=/usr/bin/docker stop ecs-agent
-      - name: dd-agent.service
-        command: start
-        runtime: true
-        content: |
-          [Unit]
-          Description=Datadog Agent
-          After=amazon-ecs-agent.service
-          After=docker.service
-          After=network-online.target
-          Requires=amazon-ecs-agent.service
-          Requires=docker.service
-          Requires=network-online.target
-
-          [Service]
-          Environment=API_KEY=$${mastodon_dd_agent_api_key}
-          ExecStartPre=/usr/bin/docker pull datadog/docker-dd-agent:latest
-          ExecStart=/usr/bin/docker run --name dd-agent --env=API_KEY=$API_KEY --volume=/var/run/docker.sock:/var/run/docker.sock --volume=/proc/:/host/proc/:ro --volume=/sys/fs/cgroup/:/host/sys/fs/cgroup:ro datadog/docker-dd-agent:latest
-          ExecStop=/usr/bin/docker stop dd-agent
+  #!/bin/bash
+  cluster="$${aws_ecs_cluster_mastodon_name}"
+  task_def="$${aws_ecs_task_definition_mastodon_dd_agent_arn}"
+  echo ECS_CLUSTER=$cluster >> /etc/ecs/ecs.config
+  start ecs
+  yum install -y aws-cli jq
+  instance_arn=$(curl -s http://localhost:51678/v1/metadata | jq -r '. | .ContainerInstanceArn' | awk -F/ '{print $NF}' )
+  az=$(curl -s http://169.254.169.254/latest/meta-data/placement/availability-zone)
+  region=$(echo $az | rev | cut -c 2- | rev)
+  echo "cluster=$cluster az=$az region=$region aws ecs start-task --cluster \
+  $cluster --task-definition $task_def --container-instances $instance_arn --region $region" >> /etc/rc.local
   CONFIG
 
   vars {
-    aws_ecs_cluster_mastodon_name = "${aws_ecs_cluster.mastodon.name}"
-    mastodon_dd_agent_api_key     = "${var.mastodon_dd_agent_api_key}"
+    aws_ecs_task_definition_mastodon_dd_agent_arn = "${aws_ecs_task_definition.mastodon_dd_agent.family}"
+    aws_ecs_cluster_mastodon_name                 = "${aws_ecs_cluster.mastodon.name}"
   }
 }

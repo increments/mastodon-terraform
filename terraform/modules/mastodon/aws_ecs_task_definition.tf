@@ -163,3 +163,66 @@ resource "aws_ecs_task_definition" "mastodon_rails_sidekiq" {
 
   task_role_arn = "${aws_iam_role.mastodon_rails.arn}"
 }
+
+resource "aws_ecs_task_definition" "mastodon_dd_agent" {
+  family = "${var.aws_resource_base_name}_dd_agent"
+
+  container_definitions = <<-JSON
+  [
+    {
+      "cpu": 10,
+      "environment": [
+        {
+          "name": "API_KEY",
+          "value": "${var.mastodon_dd_agent_api_key}"
+        }
+      ],
+      "name": "dd-agent",
+      "image": "${replace(aws_ecr_repository.dd_agent.repository_url, "https://", "")}:${var.mastodon_docker_image_tag_dd_agent}",
+      "logConfiguration": {
+        "logDriver": "awslogs",
+        "options": {
+          "awslogs-group": "${var.aws_resource_base_name}",
+          "awslogs-region": "${data.aws_region.current.name}",
+          "awslogs-stream-prefix": "dd_agent"
+        }
+      },
+      "essential": true,
+      "memory": 256,
+      "mountPoints": [
+        {
+          "containerPath": "/var/run/docker.sock",
+          "sourceVolume": "docker_sock"
+        },
+        {
+          "containerPath": "/host/sys/fs/cgroup",
+          "sourceVolume": "cgroup",
+          "readOnly": true
+        },
+        {
+          "containerPath": "/host/proc",
+          "sourceVolume": "proc",
+          "readOnly": true
+        }
+      ]
+    }
+  ]
+  JSON
+
+  volume {
+    "name"      = "docker_sock"
+    "host_path" = "/var/run/docker.sock"
+  }
+
+  volume {
+    "name"      = "proc"
+    "host_path" = "/proc/"
+  }
+
+  volume {
+    "name"      = "cgroup"
+    "host_path" = "/cgroup/"
+  }
+
+  task_role_arn = "${aws_iam_role.mastodon_dd_agent.arn}"
+}
