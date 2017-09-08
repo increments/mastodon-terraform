@@ -3,5 +3,5 @@ resource "aws_ecr_repository" "mastodon" {
 }
 
 resource "aws_ecr_repository" "mastodon_dd_agent" {
-  name = "${var.aws_resource_base_name}_dd_agent"
+  name = "${var.aws_resource_base_name}-dd-agent"
 }
