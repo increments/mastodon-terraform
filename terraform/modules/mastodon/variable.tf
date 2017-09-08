@@ -70,6 +70,10 @@ variable "mastodon_docker_image_tag" {}
 
 variable "mastodon_docker_image_tag_rails_db_migration" {}
 
+variable "mastodon_docker_image_tag_dd_agent" {
+  default = "latest"
+}
+
 variable "mastodon_email_domain_blacklist" {}
 
 variable "mastodon_email_domain_whitelist" {}
@@ -139,3 +143,5 @@ variable "mastodon_node_streaming_port" {
 variable "mastodon_vapid_private_key" {}
 
 variable "mastodon_vapid_public_key" {}
+
+variable "mastodon_dd_agent_api_key" {}

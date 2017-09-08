@@ -52,5 +52,6 @@ module "mastodon" {
   mastodon_node_streaming_cluster_num                               = "${var.mastodon_node_streaming_cluster_num}"
   mastodon_vapid_private_key                                        = "${var.mastodon_vapid_private_key}"
   mastodon_vapid_public_key                                         = "${var.mastodon_vapid_public_key}"
+  mastodon_dd_agent_api_key                                         = "${var.mastodon_dd_agent_api_key}"
   source                                                            = "./modules/mastodon"
 }

@@ -22,3 +22,26 @@ resource "aws_iam_role_policy" "mastodon_rails" {
 
   role = "${aws_iam_role.mastodon_rails.id}"
 }
+
+resource "aws_iam_role_policy" "mastodon_ec2" {
+  name = "${var.aws_resource_base_name}_ec2"
+
+  policy = <<-JSON
+  {
+    "Version": "2012-10-17",
+    "Statement": [
+      {
+        "Effect": "Allow",
+        "Action": [
+          "ecs:StartTask"
+        ],
+        "Resource": [
+          "*"
+        ]
+      }
+    ]
+  }
+  JSON
+
+  role = "${aws_iam_role.mastodon_ec2.id}"
+}

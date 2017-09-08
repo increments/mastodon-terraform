@@ -275,3 +275,24 @@ data "template_file" "mastodon_environment_variables_streaming" {
     mastodon_redis_port          = "${aws_elasticache_cluster.mastodon.cache_nodes.0.port}"
   }
 }
+
+data "template_file" "mastodon_aws_launch_configuration_user_data" {
+  template = <<-CONFIG
+  #!/bin/bash
+  cluster="$${aws_ecs_cluster_mastodon_name}"
+  task_def="$${aws_ecs_task_definition_mastodon_dd_agent_arn}"
+  echo ECS_CLUSTER=$cluster >> /etc/ecs/ecs.config
+  start ecs
+  yum install -y aws-cli jq
+  instance_arn=$(curl -s http://localhost:51678/v1/metadata | jq -r '. | .ContainerInstanceArn' | awk -F/ '{print $NF}' )
+  az=$(curl -s http://169.254.169.254/latest/meta-data/placement/availability-zone)
+  region=$(echo $az | rev | cut -c 2- | rev)
+  echo "cluster=$cluster az=$az region=$region aws ecs start-task --cluster \
+  $cluster --task-definition $task_def --container-instances $instance_arn --region $region" >> /etc/rc.local
+  CONFIG
+
+  vars {
+    aws_ecs_task_definition_mastodon_dd_agent_arn = "${aws_ecs_task_definition.mastodon_dd_agent.family}"
+    aws_ecs_cluster_mastodon_name                 = "${aws_ecs_cluster.mastodon.name}"
+  }
+}
