@@ -62,6 +62,10 @@ variable "mastodon_db_name" {}
 
 variable "mastodon_db_pass" {}
 
+variable "mastodon_db_pool" {
+  default = ""
+}
+
 variable "mastodon_db_user" {}
 
 variable "mastodon_default_locale" {}
