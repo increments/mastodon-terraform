@@ -26,6 +26,10 @@ data "template_file" "mastodon_environment_variables_rails" {
       "value": "$${mastodon_db_pass}"
     },
     {
+      "name": "DB_POOL",
+      "value": "$${mastodon_db_pool}"
+    },
+    {
       "name": "DB_PORT",
       "value": "$${mastodon_db_port}"
     },
@@ -186,6 +190,7 @@ data "template_file" "mastodon_environment_variables_rails" {
     mastodon_db_host                     = "${aws_db_instance.mastodon.address}"
     mastodon_db_name                     = "${aws_db_instance.mastodon.name}"
     mastodon_db_pass                     = "${var.mastodon_db_pass}"
+    mastodon_db_pool                     = "${var.mastodon_db_pool}"
     mastodon_db_port                     = "${aws_db_instance.mastodon.port}"
     mastodon_db_user                     = "${aws_db_instance.mastodon.username}"
     mastodon_default_locale              = "${var.mastodon_default_locale}"
